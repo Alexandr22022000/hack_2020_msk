@@ -1,0 +1,142 @@
+import React from 'react';
+import {Link} from "react-router-dom";
+
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import MenuIcon from '@material-ui/icons/Menu';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import Divider from '@material-ui/core/Divider';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
+import BusinessIcon from '@material-ui/icons/Business';
+import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
+import ShareIcon from '@material-ui/icons/Share';
+import AddIcon from '@material-ui/icons/Add';
+import TextField from '@material-ui/core/TextField';
+
+import EventIcon from '@material-ui/icons/Event';
+import MapIcon from '@material-ui/icons/Map';
+import DescriptionIcon from '@material-ui/icons/Description';
+import AssignmentIcon from '@material-ui/icons/Assignment';
+
+
+class Dashboard extends React.Component {
+    state = {};
+
+    render () {
+        return (
+            <div>
+                <AppBar position="static">
+                    <Toolbar>
+                        <IconButton
+                            edge="start"
+                            color="inherit"
+                            aria-label="open drawer"
+                            onClick={() => this.setState({showDrawer: true})}
+                        >
+                            <MenuIcon />
+                        </IconButton>
+                        <img style={{height: '40px'}} src="https://www.mos.ru/upload/structure/institutions/icon/glavkontrol2x.png"/>
+                        <Typography style={{marginLeft: '10px'}} variant="h6">Интерактивная карта благоустройства Москвы</Typography>
+                        <Typography variant="h6" style={{flexGrow: '1'}}/>
+                        {this.props.children}
+                        <IconButton
+                            aria-label="account of current user"
+                            aria-controls="primary-search-account-menu"
+                            aria-haspopup="true"
+                            color="inherit"
+                            onClick={() => this.setState({showAccountMenu: true})}
+                        >
+                            <AccountCircle />
+                        </IconButton>
+                        <Menu
+                            anchorEl={'primary-search-account-menu'}
+                            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                            id={1}
+                            keepMounted
+                            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+                            open={this.state.showAccountMenu}
+                            onClose={() => this.setState({showAccountMenu: false})}
+                        >
+                            <MenuItem component={Link} to={"/"}>Profile</MenuItem>
+                            <MenuItem>Logout</MenuItem>
+                        </Menu>
+                    </Toolbar>
+                </AppBar>
+
+                <SwipeableDrawer
+                    open={this.state.showDrawer}
+                    onClose={() => this.setState({showDrawer: false})}
+                    onOpen={() => this.setState({showDrawer: true})}
+                >
+                    <div>
+                        <ListItem button key={'close'} onClick={() => this.setState({showDrawer: false})}>
+                            <ListItemIcon><img style={{height: '40px'}} src="https://www.mos.ru/upload/structure/institutions/icon/glavkontrol2x.png"/></ListItemIcon>
+                            <ListItemText style={{maxWidth: '220px'}} primary={"Главное контрольное управление города Москвы"} />
+                            <ChevronLeftIcon />
+                        </ListItem>
+                    </div>
+                    <Divider />
+                    <List>
+                        <ListItem
+                            style={{backgroundColor: '#b3b3b3'}}
+                            component={Link}
+                            to={"/"}
+                            button
+                        >
+                            <ListItemIcon><MapIcon/></ListItemIcon>
+                            <ListItemText primary="Карта" />
+                        </ListItem>
+
+                        <ListItem
+                            component={Link}
+                            to={"/"}
+                            button
+                        >
+                            <ListItemIcon><AssignmentIcon/></ListItemIcon>
+                            <ListItemText primary="Коллизии" />
+                        </ListItem>
+                        <ListItem
+                            component={Link}
+                            to={"/"}
+                            button
+                        >
+                            <ListItemIcon><AccountCircle/></ListItemIcon>
+                            <ListItemText primary="Руководители подразделений" />
+                        </ListItem>
+                        <ListItem
+                            component={Link}
+                            to={"/"}
+                            button
+                        >
+                            <ListItemIcon><EventIcon/></ListItemIcon>
+                            <ListItemText primary="Календарь" />
+                        </ListItem>
+
+                        <ListItem
+                            component={Link}
+                            to={"/upload_xlsx"}
+                            button
+                        >
+                            <ListItemIcon><DescriptionIcon/></ListItemIcon>
+                            <ListItemText primary="Титульные листы" />
+                        </ListItem>
+                    </List>
+                </SwipeableDrawer>
+
+                {/*<iframe style={{width: 'calc(100% - 40px)', maxWidth: '1000px', margin: '20px', border: '1px solid red', height: '700px'}} src="/map"/>*/}
+                <iframe style={{width: '100%', margin: '0', border: '0', height: '800px'}} src="/map"/>
+            </div>
+        );
+    }
+}
+
+export default Dashboard;

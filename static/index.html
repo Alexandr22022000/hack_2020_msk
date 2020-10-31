@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AAAAAAA</title>
+
+    <link  href="http://egiptest.mos.ru/jsapi/lib/ol-5.2.0.css" rel="stylesheet" type="text/css">
+    <link  href="http://egiptest.mos.ru/jsapi/lib/ol-ext-3.0.1.css" rel="stylesheet" type="text/css">
+
+    <script src="http://egiptest.mos.ru/jsapi/lib/proj4-2.4.4.js"></script>
+    <script src="http://egiptest.mos.ru/jsapi/lib/ol-5.2.0.js"></script>
+    <script src="http://egiptest.mos.ru/jsapi/lib/ol-ext-3.0.1.js"></script>
+    <script src="http://egiptest.mos.ru/jsapi/dist/egip.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script>
+        egip.setConfig({
+            baseURL: location.origin,
+            withCredentials: true,
+            apiKey: 'exampleApiKey'
+        });
+    </script>
+</head>
+<body>
+
+<div id="map" class="map" style="width: 100%; height: 800px"></div>
+
+<script>
+    const map = egip.layers.createMap({
+        target: 'map',
+        controls: ol.control.defaults({
+            attribution: false
+        }),
+        layers: [egip.layers.createTiles2GIS()],
+        view: egip.layers.createViewWGS({
+            zoom: 7,
+        })
+    });
+    egip.layers.switchMapTo3857(map);
+    const contorl = new ol.control.MousePosition({
+        coordinateFormat: ol.coordinate.createStringXY(4),
+        projection: 'EPSG:77',
+        className: undefined,
+        undefinedHTML: '&nbsp;'
+    });
+    map.addControl(contorl);
+
+    const showGeometry = (coordinates) => {
+        coordinates = coordinates.map(i => i.map(i => i.map(item => egip.layers.toMetric(ol.proj.transform(item, 'EPSG:77', 'EPSG:4326')))));
+        var polygon = new ol.Feature(new ol.geom.MultiPolygon(coordinates));
+
+        var polygons = egip.layers.createVectorLayer({
+            id: 'polygons',
+            type: 'random',
+            source: egip.layers.createVectorSource({
+                features: [polygon],
+            }),
+            style: new egip.layers.style.Style({
+                fill: new egip.layers.style.Fill({
+                    color: 'rgba(255,5,0,0.52)'
+                }),
+                stroke: new egip.layers.style.Stroke({
+                    color: 'red',
+                    width: 2
+                }),
+                image: new egip.layers.style.Circle({
+                    radius: 7,
+                    fill: new egip.layers.style.Fill({
+                        color: 'red'
+                    })
+                })
+            })
+        });
+        map.addLayer(polygons);
+    };
+</script>
+
+<script>
+    $.ajax({
+        url: '/geometry',
+        method: 'get',
+        dataType: 'json',
+        success: (data) => {
+            console.log(data);
+
+            data.forEach(item => {
+                showGeometry(item.data.geometry.coordinates);
+            });
+        }
+    });
+</script>
+</body>
+</html>
