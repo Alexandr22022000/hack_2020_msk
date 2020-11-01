@@ -27,7 +27,7 @@ app.post("/upload", function (req, res) {
         processDoc(filedata.path);
         setTimeout(() => {
             redirect(res);
-        }, 1000);
+        }, 1300);
     }
 });
 

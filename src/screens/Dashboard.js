@@ -20,12 +20,19 @@ import BusinessIcon from '@material-ui/icons/Business';
 import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
 import ShareIcon from '@material-ui/icons/Share';
 import AddIcon from '@material-ui/icons/Add';
-import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 
 import EventIcon from '@material-ui/icons/Event';
 import MapIcon from '@material-ui/icons/Map';
 import DescriptionIcon from '@material-ui/icons/Description';
 import AssignmentIcon from '@material-ui/icons/Assignment';
+import Paper from '@material-ui/core/Paper';
+import Table from "@material-ui/core/Table";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import TableCell from "@material-ui/core/TableCell";
+import TableBody from "@material-ui/core/TableBody";
+import TableContainer from "@material-ui/core/TableContainer";
 
 
 class Dashboard extends React.Component {
@@ -132,8 +139,63 @@ class Dashboard extends React.Component {
                     </List>
                 </SwipeableDrawer>
 
-                {/*<iframe style={{width: 'calc(100% - 40px)', maxWidth: '1000px', margin: '20px', border: '1px solid red', height: '700px'}} src="/map"/>*/}
-                <iframe style={{width: '100%', margin: '0', border: '0', height: '800px'}} src="/map"/>
+                <iframe style={{width: 'calc(100% - 40px)', maxWidth: '1000px', margin: '20px', border: '0', height: '800px', display: 'inline-block'}} src="/map"/>
+                {/*<iframe style={{width: '100%', margin: '0', border: '1px red solid', height: '800px'}} src="/map"/>*/}
+
+                <Paper style={{width: 'calc(100% - 80px)', maxWidth: '500px', margin: '20px', display: 'inline-block', verticalAlign: 'top', padding: '20px', textAlign: 'left'}}>
+                    <Button variant="contained" color="primary" style={{marginRight: '20px', marginBottom: '20px'}}>Построить маршруты</Button>
+                    <a href="/reset" style={{textDecoration: 'none'}}>
+                        <Button variant="contained" color="primary" style={{textDecoration: 'none', marginBottom: '20px'}}>Очистить карту</Button>
+                    </a>
+
+
+                    <TableContainer component={Paper} style={{maxHeight: 'calc(100vh - 65px)'}}>
+                        <Table stickyHeader>
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>Округа</TableCell>
+                                    <TableCell align="right">Количество объектов</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+
+                                <TableRow style={{cursor: 'pointer'}} hover>
+                                    <TableCell>ЦАО</TableCell>
+                                    <TableCell align="right">128</TableCell>
+                                </TableRow>
+                                <TableRow style={{cursor: 'pointer'}} hover>
+                                    <TableCell>ЦАО</TableCell>
+                                    <TableCell align="right">234</TableCell>
+                                </TableRow>
+                                <TableRow style={{cursor: 'pointer'}} hover>
+                                    <TableCell>ВАО</TableCell>
+                                    <TableCell align="right">44</TableCell>
+                                </TableRow>
+                                <TableRow style={{cursor: 'pointer'}} hover>
+                                    <TableCell>ЮАО</TableCell>
+                                    <TableCell align="right">95</TableCell>
+                                </TableRow>
+                                <TableRow style={{cursor: 'pointer'}} hover>
+                                    <TableCell>ЮЗАО</TableCell>
+                                    <TableCell align="right">153</TableCell>
+                                </TableRow>
+                                <TableRow style={{cursor: 'pointer'}} hover>
+                                    <TableCell>ЗАО</TableCell>
+                                    <TableCell align="right">130</TableCell>
+                                </TableRow>
+                                <TableRow style={{cursor: 'pointer'}} hover>
+                                    <TableCell>СЗАО</TableCell>
+                                    <TableCell align="right">201</TableCell>
+                                </TableRow>
+                                <TableRow style={{cursor: 'pointer'}} hover>
+                                    <TableCell>Троицкий</TableCell>
+                                    <TableCell align="right">16</TableCell>
+                                </TableRow>
+
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                </Paper>
             </div>
         );
     }
