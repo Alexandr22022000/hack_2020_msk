@@ -6,6 +6,7 @@ const xlsxFile = require('read-excel-file/node'),
     app = express();
 
 let dataset = [];
+app.set('port', (process.env.PORT || 5000));
 
 app.get('/geometry', (req, res) => {
     res.json(dataset).status(200);
@@ -44,7 +45,7 @@ app.get('/*', (req, res) => {
     stream.pipe(res);
 });
 
-app.listen(5000, () => console.log("Server was started on port 5000"));
+app.listen(app.get('port'), () => console.log('Server is started on port ' + app.get('port')));
 
 const redirect = (res) => {
     const stream = fs.createReadStream(path.resolve('static/redirect.html'));
