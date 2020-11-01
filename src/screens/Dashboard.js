@@ -139,7 +139,7 @@ class Dashboard extends React.Component {
                     </List>
                 </SwipeableDrawer>
 
-                <iframe style={{width: 'calc(100% - 40px)', maxWidth: '1000px', margin: '20px', border: '0', height: '800px', display: 'inline-block'}} src="/map"/>
+                <iframe style={{width: '100%', maxWidth: '1000px', margin: '0', border: '0', height: '800px', display: 'inline-block'}} src="/map"/>
                 {/*<iframe style={{width: '100%', margin: '0', border: '1px red solid', height: '800px'}} src="/map"/>*/}
 
                 <Paper style={{width: 'calc(100% - 80px)', maxWidth: '500px', margin: '20px', display: 'inline-block', verticalAlign: 'top', padding: '20px', textAlign: 'left'}}>
