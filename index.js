@@ -25,7 +25,9 @@ app.post("/upload", function (req, res) {
         res.send("Ошибка при загрузке файла");
     else {
         processDoc(filedata.path);
-        redirect(res);
+        setTimeout(() => {
+            redirect(res);
+        }, 1000);
     }
 });
 
