@@ -11,6 +11,11 @@ app.get('/geometry', (req, res) => {
     res.json(dataset).status(200);
 });
 
+app.get('/reset', (req, res) => {
+    dataset = [];
+    redirect(res);
+});
+
 app.use(multer({dest:"uploads"}).single("filedata"));
 app.post("/upload", function (req, res) {
 
@@ -19,10 +24,7 @@ app.post("/upload", function (req, res) {
         res.send("Ошибка при загрузке файла");
     else {
         processDoc(filedata.path);
-        const stream = fs.createReadStream(path.resolve('static/redirect.html'));
-        res.statusCode = 200;
-        res.setHeader('Content-Type', 'text/html');
-        stream.pipe(res);
+        redirect(res);
     }
 });
 
@@ -43,6 +45,13 @@ app.get('/*', (req, res) => {
 });
 
 app.listen(5000, () => console.log("Server was started on port 5000"));
+
+const redirect = (res) => {
+    const stream = fs.createReadStream(path.resolve('static/redirect.html'));
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'text/html');
+    stream.pipe(res);
+};
 
 const processDoc = (filePath) => {
     xlsxFile('./' + filePath).then((rows) => {
